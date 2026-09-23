@@ -55,5 +55,23 @@ const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
       </div>
     </main>
     <Footer />
+
+    {
+      SITE.analytics?.goatcounter && (
+        <script
+          define:vars={{ gcUrl: `https://${SITE.analytics.goatcounter}.goatcounter.com/count` }}
+        >
+          // GoatCounter：隐私友好的访客统计（不采集个人信息、不存 Cookie、无需同意横幅）
+          // define:vars 生成的是内联普通脚本，普通脚本顶层不能写 return，故用 IIFE 包一层
+          (function () {
+            var s = document.createElement('script');
+            s.async = true;
+            s.src = 'https://gc.zgo.at/count.js';
+            s.setAttribute('data-goatcounter', gcUrl);
+            document.head.appendChild(s);
+          })();
+        </script>
+      )
+    }
   </body>
 </html>

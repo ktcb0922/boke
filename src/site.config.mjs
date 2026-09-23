@@ -43,9 +43,19 @@ export const SITE = {
   },
 
   // ─── 社交链接（不需要的留空字符串即可隐藏）────────────────────
+  // GitHub 刻意留空：仓库是公开的，页脚放链接等于把访客引到源码页面
   social: {
-    github: 'https://github.com/ktcb0922',
+    github: '',
     email: '',
+  },
+
+  // ─── 访客统计（GoatCounter）──────────────────────────────────
+  // 隐私友好：不采集个人信息、不存 Cookie、不需要同意横幅。
+  // 用法：去 https://www.goatcounter.com 注册（免费），拿到你的站点码
+  // （例如注册时填 ktcb0922，站点就是 ktcb0922.goatcounter.com），
+  // 把站点码填在下面即可接入。留空 = 完全不加载任何统计脚本。
+  analytics: {
+    goatcounter: '',
   },
 };
 
