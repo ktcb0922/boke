@@ -51,11 +51,10 @@ export const SITE = {
 
   // ─── 访客统计（GoatCounter）──────────────────────────────────
   // 隐私友好：不采集个人信息、不存 Cookie、不需要同意横幅。
-  // 用法：去 https://www.goatcounter.com 注册（免费），拿到你的站点码
-  // （例如注册时填 ktcb0922，站点就是 ktcb0922.goatcounter.com），
-  // 把站点码填在下面即可接入。留空 = 完全不加载任何统计脚本。
+  // 站点码 = GoatCounter 的 Account name，后台在 https://ktcb.goatcounter.com
+  // 留空 = 完全不加载任何统计脚本。
   analytics: {
-    goatcounter: '',
+    goatcounter: 'ktcb',
   },
 };
 
