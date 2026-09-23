@@ -27,7 +27,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   const list = document.getElementById('search-results');
 
   // 站点可能部署在子路径下（例如 /boke/），Pagefind 索引里存的是不含前缀的路径，
-  // 所以这里要手动补上 BASE_URL
+  // 所以这里要手动补上 BASE_URL。当前 base 为 '/'，BASE 会是空字符串，逻辑自动跳过。
   const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
 
   function toHref(url) {

@@ -7,8 +7,8 @@ export default defineConfig({
   // 站点根域名，供 canonical / sitemap / RSS 使用
   site: SITE.url,
 
-  // 部署子路径。仓库叫 boke，站点就挂在 /boke/ 下；
-  // 如果以后把仓库改名为 用户名.github.io，这里改回 '/' 即可
+  // 部署路径，跟随 src/site.config.mjs 的 base。
+  // 部署在域名根目录（Cloudflare Pages / 自有域名）时为 '/'
   base: SITE.base,
 
   integrations: [sitemap()],

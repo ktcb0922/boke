@@ -20,13 +20,17 @@ export const SITE = {
   // 页面语言
   lang: 'zh-CN',
 
-  // ─── 网址（部署到 GitHub Pages 用）────────────────────────────
-  // 你的 GitHub Pages 根域名，结尾不要斜杠
-  url: 'https://ktcb0922.github.io',
+  // ─── 网址（部署到 Cloudflare Pages 用）──────────────────────
+  // 站点根域名，结尾不要斜杠。
+  // Cloudflare 建项目时会分配一个 *.pages.dev 子域名，把实际拿到的填这里。
+  // 如果创建项目时 boke 已被占用，Cloudflare 会给你 boke-xxxx.pages.dev，
+  // 那就把这行改成实际地址即可 —— 只改这一处，全站链接自动跟着变。
+  url: 'https://boke.pages.dev',
 
-  // 仓库名不是「用户名.github.io」时，这里必须写仓库名。
-  // 仓库叫 boke，站点就挂在 https://ktcb0922.github.io/boke/
-  base: '/boke/',
+  // 部署在根路径就写 '/'。
+  // 注意：改成 '/' 后，GitHub Pages 上的 /boke/ 版本会失效，
+  // 所以 .github/workflows/deploy.yml 已经删除，改用 Cloudflare 构建。
+  base: '/',
 
   // 首页显示的文章数
   postsPerPage: 10,
@@ -61,10 +65,11 @@ export const SITE = {
 /**
  * 给站内路径加上 base 前缀。
  *
- * 站点部署在子路径（/boke/）下时，所有内部链接都必须过这个函数，
- * 否则部署后点任何链接都会 404。path 写成以 / 开头的站点绝对路径。
+ * 所有内部链接都必须过这个函数，否则以后一旦把站点挪到子路径下，
+ * 全站链接都会 404。path 写成以 / 开头的站点绝对路径。
  *
- *   withBase('/posts/hello/')  →  '/boke/posts/hello/'
+ *   base = '/'       →  withBase('/posts/hello/')  →  '/posts/hello/'
+ *   base = '/boke/'  →  withBase('/posts/hello/')  →  '/boke/posts/hello/'
  */
 export function withBase(path = '/') {
   const base = SITE.base.endsWith('/') ? SITE.base.slice(0, -1) : SITE.base;
