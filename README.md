@@ -99,8 +99,19 @@ pbcopy < ~/.ssh/id_ed25519.pub                  # 公钥复制到剪贴板
 **方式 B：HTTPS + Personal Access Token**
 
 打开 https://github.com/settings/tokens → **Generate new token (classic)** →
-勾选 **repo** 权限 → 生成后**立刻复制**（只显示一次）。
+勾选 **`repo`** 和 **`workflow`** 两个权限 → 生成后**立刻复制**（只显示一次）。
 推送时用户名填 `ktcb0922`，密码填这个 token。
+
+> ⚠️ **`workflow` 权限不能漏。** 本仓库含 `.github/workflows/deploy.yml`，
+> 只勾 `repo` 的话推送会被整体拒绝：
+>
+> ```
+> ! [remote rejected] main -> main (refusing to allow a Personal Access Token
+>   to create or update workflow `.github/workflows/deploy.yml` without `workflow` scope)
+> ```
+>
+> **不用重新生成令牌** —— 点进那个令牌，勾上 `workflow`，点 **Update token** 就行。
+> 令牌字符串不会变，所以钥匙串里存的凭据继续有效，直接重新 `git push` 即可。
 
 ### 3. 推送代码
 
@@ -200,6 +211,14 @@ git push
 ---
 
 ## 七、常见问题
+
+**推送被拒绝，提示 `without 'workflow' scope`？**
+令牌少了 `workflow` 权限，见上面第三节「方式 B」。点进令牌勾上 `workflow` → **Update token**，
+然后直接重新 `git push`，不用重新生成令牌。
+
+**推送提示 `Repository not found`？**
+第 1 步的仓库还没建，或者仓库名不是 `boke`。也可能是钥匙串里缓存了错的凭据，
+清掉再试：`printf "protocol=https\nhost=github.com\n\n" | git credential-osxkeychain erase`
 
 **搜索没结果？**
 搜索索引在 `npm run build` 时生成。开发模式（`npm run dev`）下没有索引，用 `npm run preview` 测试。
