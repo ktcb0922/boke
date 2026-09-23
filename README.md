@@ -79,22 +79,19 @@ export const SITE = {
 
 ### 2. 配好 git 身份和认证
 
-你机器上目前**既没有 git 身份，也没有任何 GitHub 认证凭据**，先补这两步。
-
-设置身份：
+git 身份**已经配好了**（`ktcb0922 <1526638881@qq.com>`）。想改成别的称呼：
 
 ```bash
 git config --global user.name "你的名字"
-git config --global user.email "你的邮箱"
 ```
 
-认证二选一：
+**还差认证** —— 机器上目前没有任何 GitHub 认证凭据，二选一：
 
 **方式 A：SSH 密钥（推荐，一次配好长期有效）**
 
 ```bash
-ssh-keygen -t ed25519 -C "你的邮箱"    # 一路回车
-pbcopy < ~/.ssh/id_ed25519.pub         # 公钥复制到剪贴板
+ssh-keygen -t ed25519 -C "1526638881@qq.com"    # 一路回车
+pbcopy < ~/.ssh/id_ed25519.pub                  # 公钥复制到剪贴板
 ```
 
 打开 https://github.com/settings/keys → **New SSH key** → 粘贴 → **Add SSH key**。
@@ -107,17 +104,19 @@ pbcopy < ~/.ssh/id_ed25519.pub         # 公钥复制到剪贴板
 
 ### 3. 推送代码
 
-仓库已经初始化好、文件也已暂存，直接提交推送：
+仓库已初始化、**首次提交已完成**（`620faaf init: 博客初始化`，33 个文件），
+现在只差关联远程仓库并推送：
 
 ```bash
 cd ~/Desktop/ktcb/学习/博客
-git commit -m "init: 博客初始化"
 git remote add origin git@github.com:ktcb0922/boke.git
 git push -u origin main
 ```
 
 > 用方式 B 的话，把 remote 那行换成
 > `git remote add origin https://github.com/ktcb0922/boke.git`
+
+> 前提是第 1 步的 `boke` 仓库已经建好了，否则推送会报 `Repository not found`。
 
 ### 4. 开启 GitHub Pages
 
