@@ -1,0 +1,111 @@
+---
+import { render } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import TableOfContents from '../../components/TableOfContents.astro';
+import Giscus from '../../components/Giscus.astro';
+import { getPublishedPosts, formatDate, readingTime } from '../../lib/posts';
+import { withBase } from '../../site.config.mjs';
+
+export async function getStaticPaths() {
+  const posts = await getPublishedPosts();
+
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      // 列表是从新到旧，所以 index+1 是更旧的一篇
+      older: posts[index + 1] ?? null,
+      newer: posts[index - 1] ?? null,
+    },
+  }));
+}
+
+const { post, older, newer } = Astro.props;
+const { Content, headings } = await render(post);
+const minutes = readingTime(post.body);
+---
+<BaseLayout
+  title={post.data.title}
+  description={post.data.description}
+  ogType="article"
+  width="article"
+>
+  <div class="article-layout">
+    <article class="article" data-pagefind-body>
+      <header class="article__header">
+        <h1 class="article__title" data-pagefind-meta="title">{post.data.title}</h1>
+
+        <div class="article__meta">
+          {post.data.pinned && <span class="pin-badge">置顶</span>}
+          <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+          {
+            post.data.updatedDate && (
+              <Fragment>
+                <span>·</span>
+                <span>更新于 {formatDate(post.data.updatedDate)}</span>
+              </Fragment>
+            )
+          }
+          <span>·</span>
+          <span>约 {minutes} 分钟</span>
+          {
+            post.data.tags.length > 0 && (
+              <Fragment>
+                <span>·</span>
+                <span class="article__tags">
+                  {post.data.tags.map((tag) => (
+                    <a href={withBase(`/tags/${encodeURIComponent(tag)}/`)}>#{tag}</a>
+                  ))}
+                </span>
+              </Fragment>
+            )
+          }
+        </div>
+
+        {post.data.description && <p class="article__desc">{post.data.description}</p>}
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <nav class="post-nav" aria-label="文章导航">
+        {
+          older ? (
+            <a class="post-nav__item" href={withBase(`/posts/${older.id}/`)}>
+              <span class="post-nav__label">← 上一篇</span>
+              <span class="post-nav__title">{older.data.title}</span>
+            </a>
+          ) : (
+            <span class="post-nav__spacer"></span>
+          )
+        }
+        {
+          newer ? (
+            <a class="post-nav__item post-nav__item--next" href={withBase(`/posts/${newer.id}/`)}>
+              <span class="post-nav__label">下一篇 →</span>
+              <span class="post-nav__title">{newer.data.title}</span>
+            </a>
+          ) : (
+            <span class="post-nav__spacer"></span>
+          )
+        }
+      </nav>
+
+      <Giscus />
+    </article>
+
+    <aside class="article-layout__aside">
+      <div class="toc-sticky">
+        <TableOfContents headings={headings} />
+      </div>
+    </aside>
+  </div>
+</BaseLayout>
+
+<style>
+  .article__tags {
+    display: inline-flex;
+    gap: 0.5rem;
+  }
+</style>

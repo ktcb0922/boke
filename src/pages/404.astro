@@ -1,0 +1,15 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { withBase } from '../site.config.mjs';
+---
+
+<BaseLayout title="页面不存在" description="404">
+  <div class="empty-state">
+    <p class="error-code">404</p>
+    <p>这个页面不存在，可能是链接写错了或者已经删掉了。</p>
+    <p>
+      <a href={withBase('/')}>回到首页</a> · <a href={withBase('/archive/')}>浏览归档</a> ·
+      <a href={withBase('/search/')}>站内搜索</a>
+    </p>
+  </div>
+</BaseLayout>

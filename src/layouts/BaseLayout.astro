@@ -1,0 +1,59 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { SITE, withBase } from '../site.config.mjs';
+import '../styles/global.css';
+
+const {
+  title,
+  description,
+  ogType = 'website',
+  /** 容器宽度：content（正文阅读）/ article（正文+目录侧栏）/ wide（首页、列表） */
+  width = 'content',
+} = Astro.props;
+
+const pageTitle = title ? `${title} — ${SITE.title}` : SITE.title;
+const pageDescription = description || SITE.description;
+const canonical = new URL(Astro.url.pathname, Astro.site ?? SITE.url).href;
+---
+<!doctype html>
+<html lang={SITE.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href={withBase('/favicon.svg')} />
+    <link rel="alternate" type="application/rss+xml" title={SITE.title} href={withBase('/rss.xml')} />
+
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:site_name" content={SITE.title} />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- 在页面绘制前决定主题，避免刷新时闪白 -->
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = stored || (prefersDark ? 'dark' : 'light');
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <div class:list={['wrap', `wrap--${width}`]}>
+        <slot />
+      </div>
+    </main>
+    <Footer />
+  </body>
+</html>

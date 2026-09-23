@@ -1,0 +1,52 @@
+---
+import { SITE } from '../site.config.mjs';
+
+const { headings } = Astro.props;
+
+// 只取 h2 / h3，层级太深反而干扰阅读
+const items = (headings ?? []).filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+{
+  items.length >= 2 && (
+    <nav class="toc" aria-label="文章目录">
+      <p class="toc__title">目录</p>
+      <ul>
+        {items.map((h) => (
+          <li class:list={[h.depth === 3 ? 'toc__h3' : 'toc__h2']}>
+            <a href={`#${h.slug}`} data-toc-link>
+              {h.text}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  )
+}
+
+<script>
+  const links = Array.from(document.querySelectorAll('[data-toc-link]'));
+  if (links.length > 0) {
+    const targets = links
+      .map((link) => document.getElementById(decodeURIComponent(link.hash.slice(1))))
+      .filter((el) => el !== null);
+
+    const setActive = (id) => {
+      links.forEach((link) => {
+        link.classList.toggle('is-active', decodeURIComponent(link.hash.slice(1)) === id);
+      });
+    };
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort((a, b) => a.boundingClientRect.top - b.boundingClientRect.top);
+        if (visible.length > 0) setActive(visible[0].target.id);
+      },
+      { rootMargin: '-80px 0px -70% 0px', threshold: 0 }
+    );
+
+    targets.forEach((el) => observer.observe(el));
+  }
+</script>

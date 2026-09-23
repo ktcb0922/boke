@@ -1,0 +1,28 @@
+---
+import { SITE } from '../site.config.mjs';
+
+const year = new Date().getFullYear();
+const social = Object.entries(SITE.social).filter(([, value]) => Boolean(value));
+const socialLabels = { github: 'GitHub', email: 'Email' };
+---
+<footer class="site-footer">
+  <div class="wrap site-footer__inner">
+    <div>
+      © {year} {SITE.author} · 由 <a href="https://astro.build" rel="noopener" target="_blank">Astro</a> 驱动
+    </div>
+    {
+      social.length > 0 && (
+        <div>
+          {social.map(([key, value], index) => (
+            <Fragment>
+              {index > 0 && ' · '}
+              <a href={value} rel="noopener" target="_blank">
+                {socialLabels[key] ?? key}
+              </a>
+            </Fragment>
+          ))}
+        </div>
+      )
+    }
+  </div>
+</footer>

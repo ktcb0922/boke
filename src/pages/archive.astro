@@ -1,0 +1,45 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getPublishedPosts, formatDate } from '../lib/posts';
+import { withBase } from '../site.config.mjs';
+
+const posts = await getPublishedPosts();
+
+// 按年份分组，倒序
+const groups = [];
+for (const post of posts) {
+  const year = String(post.data.pubDate.getFullYear());
+  const current = groups.at(-1);
+  if (current && current.year === year) {
+    current.items.push(post);
+  } else {
+    groups.push({ year, items: [post] });
+  }
+}
+---
+<BaseLayout title="归档" description="按时间浏览所有文章" width="wide">
+  <header class="page-head">
+    <h1>归档</h1>
+    <p>共 {posts.length} 篇文章</p>
+  </header>
+
+  {
+    groups.map((group) => (
+      <section>
+        <h2 class="archive-year">{group.year}</h2>
+        <ul class="archive-list">
+          {group.items.map((post) => (
+            <li>
+              <time datetime={post.data.pubDate.toISOString()}>
+                {formatDate(post.data.pubDate).slice(5)}
+              </time>
+              <a href={withBase(`/posts/${post.id}/`)}>{post.data.title}</a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+
+  {posts.length === 0 && <p class="empty-state">还没有文章。</p>}
+</BaseLayout>

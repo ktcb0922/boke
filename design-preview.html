@@ -1,0 +1,264 @@
+<!doctype html>
+<html lang="zh-CN" data-page-node-id="eBFoOuDU210g7iYTnuRlMk">
+  <head data-page-node-id="3LEKuC98MGzOdt2tbP3mw5">
+    <meta charset="utf-8" data-page-node-id="D0pLKwzBr5QKEBXBaI3XuM" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" data-page-node-id="osCzD3WxRyE3AY5gE1yCqX" />
+    <title>设计预览 — 我的技术笔记</title>
+    <link rel="stylesheet" href="./src/styles/global.css" data-page-node-id="4U2fUnC1fbpeUHIDKvxLH1" />
+    <style>
+      /* 仅用于这个预览页：模拟 Shiki 双主题的 token 配色 */
+      .pv-kw { color: var(--pv-l-kw); }
+      .pv-str { color: var(--pv-l-str); }
+      .pv-fn { color: var(--pv-l-fn); }
+      .pv-cm { color: var(--pv-l-cm); font-style: italic; }
+      [data-theme='dark'] .pv-kw { color: var(--pv-d-kw); }
+      [data-theme='dark'] .pv-str { color: var(--pv-d-str); }
+      [data-theme='dark'] .pv-fn { color: var(--pv-d-fn); }
+      [data-theme='dark'] .pv-cm { color: var(--pv-d-cm); }
+
+      .preview-label {
+        margin: 3rem 0 1rem;
+        padding: 0.4rem 0.8rem;
+        border-radius: 999px;
+        background: var(--accent-soft);
+        color: var(--accent);
+        font-size: 0.78rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        display: inline-block;
+      }
+
+      .preview-note {
+        margin: 0 0 2rem;
+        padding: 0.9rem 1.1rem;
+        border: 1px dashed var(--border-strong);
+        border-radius: var(--radius);
+        background: var(--bg-subtle);
+        color: var(--text-muted);
+        font-size: 0.88rem;
+      }
+
+      .preview-divider {
+        margin: 4rem 0 0;
+        border-top: 1px solid var(--border);
+      }
+    </style>
+    <script is:inline>
+      (function () {
+        try {
+          var stored = localStorage.getItem('theme');
+          var prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          document.documentElement.dataset.theme = stored || (prefersDark ? 'dark' : 'light');
+        } catch (e) {
+          document.documentElement.dataset.theme = 'light';
+        }
+      })();
+    </script>
+  </head>
+  <body data-page-node-id="JjokFfaSgzB7lD5dVWZE5N">
+    <header class="site-header" data-page-node-id="kAshRoN8ggtSSOlEsJDksv">
+      <div class="wrap site-header__inner" data-page-node-id="aqANOAafrG1na2LpCGk5se">
+        <a class="site-title" href="#" data-page-node-id="2KKHajQ7BmcMWh8JIxl3C5">我的技术笔记</a>
+        <nav class="site-nav" data-page-node-id="NRbGAvMmuzM8shICE9kvbA">
+          <a href="#" aria-current="page" data-page-node-id="TAZK6uVwTO6Vf0xQcQMSR4">首页</a>
+          <a href="#" data-page-node-id="moC0hHnQHCD6nTlSLQcFDu">归档</a>
+          <a href="#" data-page-node-id="5VQZSpsuqnC34e9bxUPejR">标签</a>
+          <a href="#" data-page-node-id="LFOHVeOnSDBKZWTbOEP64o">关于</a>
+          <a href="#" data-page-node-id="msbRHAFRk0Y9tE0FLuITSu">搜索</a>
+          <button class="theme-toggle" id="theme-toggle" type="button" aria-label="切换主题" data-page-node-id="4MsVwaSGCBrqiwd65IA6v5">
+            <svg class="icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" data-page-node-id="B0zVKwhRXJ3YYh6HVEh5io">
+              <circle cx="12" cy="12" r="4" data-page-node-id="dvVR5DHjmOByfUE3yP4V1R"></circle>
+              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" data-page-node-id="HlhGxD6vaUwMnGaA0Clnhc"></path>
+            </svg>
+            <svg class="icon-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" data-page-node-id="j6ZeSehPq06sljo1FP6Svz">
+              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" data-page-node-id="Xq5NofNmwho31BEO9BO1A4"></path>
+            </svg>
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <main data-page-node-id="nOHMvOigtAZYDsa9WBl0Wz">
+      <div class="wrap wrap--wide" data-page-node-id="ai94vGUeMwJrnl0vany49X">
+        <span class="preview-label" data-page-node-id="ppDG0LtnZYb0wRoiOVMT1W">预览 1 / 2 · 首页</span>
+        <p class="preview-note" data-page-node-id="QsIQTWcZx9Nv9rFZKbEDgI">
+          这是设计预览页，用的就是项目里真正的 <code data-page-node-id="ApU6FgBhkk4dxzX9gIPw7j">src/styles/global.css</code>。
+          右上角的按钮可以切换明暗主题。它只是个静态样张，不参与构建，随时可以删掉。
+        </p>
+
+        <section class="hero" data-page-node-id="7ZwxFcesGit6d7fNCmRECM">
+          <h1 data-page-node-id="HYvTO2rROU4p6gThVOeTfp">我的技术笔记</h1>
+          <p data-page-node-id="wOL5OQPQ2a7EawWSh1TDxq">记录、整理、输出</p>
+        </section>
+
+        <section data-page-node-id="vkLzR9vheovbxUBjel1ZpR">
+          <div class="section-head" data-page-node-id="0GtRftjnZtL3Q2Bc8dglBv">
+            <h2 data-page-node-id="oZJX367GYZBLDKhQGMTZ8E">最新文章</h2>
+            <a href="#" data-page-node-id="N3UXGVbmMKQSFoE3WAeVXb">全部 2 篇 →</a>
+          </div>
+
+          <ul class="post-list" data-page-node-id="EEcODsrn1MwVceEbfcmvA4">
+            <li class="post-card" data-page-node-id="RfbWgBNRewALf3AQbLDOn1">
+              <h3 class="post-card__title" data-page-node-id="aJ2nCxg8KUl8DAHoE9SILF"><a href="#" data-page-node-id="1N5pseu5rjXKMv9pQe7bQC">写在前面：这个博客怎么用</a></h3>
+              <div class="post-card__meta" data-page-node-id="pfNr9zZhBxFetjgGYjkGJH">
+                <span class="pin-badge" data-page-node-id="iRs2VwhXfSZUJedYA1suIu">置顶</span>
+                <time data-page-node-id="Vgbux65kqcmfEdiTcCmZau">2026/09/23</time>
+                <span data-page-node-id="TXUbBG8FDlIUu1GtBOWPCr">·</span>
+                <span data-page-node-id="m0mhfECbhF0oALRba0P4fd">约 2 分钟</span>
+                <span data-page-node-id="b4i6d2ROKc8YV2Sl9imuMA">·</span>
+                <span data-page-node-id="60Wz4Xf3IHDYiSC8oU0wpe">#公告</span>
+              </div>
+              <p class="post-card__desc" data-page-node-id="JvmeAKvEh1vTqvISLg0FRU">博客已经搭好了。这篇说明写在哪、怎么发、哪些地方可以改。</p>
+            </li>
+
+            <li class="post-card" data-page-node-id="ipUYGf0eIxKs7RsmiFinSK">
+              <h3 class="post-card__title" data-page-node-id="14YeEtZKmDu4kYkarvwYQl"><a href="#" data-page-node-id="0j1EMOA7C7xsoGSTxt0P32">用 Shiki 双主题实现跟随切换的代码高亮</a></h3>
+              <div class="post-card__meta" data-page-node-id="qabazhuhKtB6o7gQpSzrgp">
+                <time data-page-node-id="xGs4milu9GkRGd54Riji3Z">2026/09/20</time>
+                <span data-page-node-id="bMQadUBGUV5jAWlf8y3TwM">·</span>
+                <span data-page-node-id="iSmChlZaLb1oPCRCVg4t6a">约 3 分钟</span>
+                <span data-page-node-id="JpRKGGvH0g4tSU0JmNocGJ">·</span>
+                <span data-page-node-id="AmC1ioUz8CldAIB5EeMcvg">#Astro #前端 #踩坑</span>
+              </div>
+              <p class="post-card__desc" data-page-node-id="k2GF7CT9kJh5VwOlRpOdUK">
+                博客要支持明暗两套主题，代码块的颜色也得跟着换。记录一下 Astro + Shiki 的具体做法和踩到的坑。
+              </p>
+            </li>
+          </ul>
+        </section>
+
+        <section style="margin-bottom: 3rem" data-page-node-id="eQ1pE9koRaty1CWkUa4ffR">
+          <div class="section-head" data-page-node-id="cddtzM6ulv91gbLYXlqi8N">
+            <h2 data-page-node-id="6PDR5sThbK1aP7ieYvFmDr">标签</h2>
+            <a href="#" data-page-node-id="PFoKLdNuIvBLUo2aVCBw9U">全部标签 →</a>
+          </div>
+          <ul class="tag-list" data-page-node-id="kFOxMtXkDkh3NTDGqeGxuF">
+            <li data-page-node-id="2uAowmUuDTVO66mEhfJbln"><a class="tag" href="#" data-page-node-id="3z8KUjJ9o6KVLhdZe5xHie">公告 <span class="tag__count" data-page-node-id="PLoIG3wK8Ape9NQDQJMzsK">1</span></a></li>
+            <li data-page-node-id="sy7NgAUzsSf8ZvDqVCEvCw"><a class="tag" href="#" data-page-node-id="imUwUuRohNJNHsSwGnwvur">Astro <span class="tag__count" data-page-node-id="bvmCBAY9jfklHOpU04nLGm">1</span></a></li>
+            <li data-page-node-id="Ah99oHQaQsU1oG2M2ycsF9"><a class="tag" href="#" data-page-node-id="lLqKOMvPFxqNJZNUYQpSgl">前端 <span class="tag__count" data-page-node-id="v28NOXFQPxDrlyW6PjFGWK">1</span></a></li>
+            <li data-page-node-id="ighO3lWp5eoh8JihUdcXeB"><a class="tag" href="#" data-page-node-id="qcyWkQuQHF2Dldgve4mPM9">踩坑 <span class="tag__count" data-page-node-id="wqYrMpNKcb58QX9Ey24A03">1</span></a></li>
+          </ul>
+        </section>
+
+        <div class="preview-divider" data-page-node-id="0z1QS7N4oR8fck364cDbdx"></div>
+        <span class="preview-label" data-page-node-id="jS7wSyIZLPofAjDiucdCkQ">预览 2 / 2 · 文章页</span>
+      </div>
+
+      <div class="wrap wrap--article" data-page-node-id="Pn3w2f90KkjcO8QF7LBIMP">
+        <div class="article-layout" data-page-node-id="3FJ1f1o9PD4EHoYMTnwFH4">
+          <article class="article" data-page-node-id="moFVopzvKFRnGRBHq5CFIT">
+            <header class="article__header" data-page-node-id="M1W8Jlo5kbqxN5aEAD9ZhX">
+              <h1 class="article__title" data-page-node-id="v8ebqhVj891jQQkOn3cimI">用 Shiki 双主题实现跟随切换的代码高亮</h1>
+              <div class="article__meta" data-page-node-id="T4vQtC988ZcKsvV8QSllvD">
+                <time data-page-node-id="ROmbeS8U6VpO9x19nyTBpa">2026/09/20</time>
+                <span data-page-node-id="8gpvFnxkbFyNfqq7ADdC1m">·</span>
+                <span data-page-node-id="rF6O5JXOWGfiF5uudF5UOT">约 3 分钟</span>
+                <span data-page-node-id="L3zFYTYLdZSrErKD8TwHCd">·</span>
+                <span class="article__tags" data-page-node-id="KuOIPp0r1mVvxvT2hCjFB1"><a href="#" data-page-node-id="ZmOFry8FXftLQ963dyCGp4">#Astro</a><a href="#" data-page-node-id="x1aOtBveQoxIetXskyDHtT">#前端</a></span>
+              </div>
+              <p class="article__desc" data-page-node-id="Ac4qhgx46coWfV6sElZEFb">
+                博客要支持明暗两套主题，代码块的颜色也得跟着换。记录一下 Astro + Shiki 的具体做法和踩到的坑。
+              </p>
+            </header>
+
+            <div class="prose" data-page-node-id="YrLpG3QTjlLMdccWmtJSJY">
+              <p data-page-node-id="zoxRSkgEaAMzRzGzfm7D56">
+                这是一篇示例技术笔记，用来展示排版效果。正文里的<strong data-page-node-id="VbTSHZNKSgpLIqbENHbUeh">强调</strong>、<a href="#" data-page-node-id="fmvAZLyzVzf3k8lXu1UIG8">链接</a>、
+                行内代码 <code data-page-node-id="M3cHBPGlJisIqFhcMJe9Yn">defaultColor</code> 都会自动套上样式。
+              </p>
+
+              <h2 data-page-node-id="NuF9HeiZw4kwkbHNDM1ezI">问题是什么</h2>
+              <p data-page-node-id="eYYuV5mEq9vPtFAdMswSYT">
+                博客支持明暗主题切换之后，正文颜色会跟着变，但代码块不会 —— 因为 Shiki 在构建时就把颜色内联成了十六进制值。
+              </p>
+              <blockquote data-page-node-id="IWGdGUBWa7leTbwyTJQExU">
+                <p data-page-node-id="1CCfTaBoHjojCEdJU8pitv">浅色主题下看着正常的颜色，切到深色背景上就糊成一片。</p>
+              </blockquote>
+
+              <h2 data-page-node-id="lnTfpytQxARFO8A0Ss3tjG">配置写法</h2>
+              <pre
+                class="astro-code"
+                style="
+                  --shiki-light: #24292e;
+                  --shiki-dark: #e1e4e8;
+                  --shiki-light-bg: #ffffff;
+                  --shiki-dark-bg: #24292e;
+                  --pv-l-kw: #d73a49; --pv-d-kw: #ff7b72;
+                  --pv-l-str: #032f62; --pv-d-str: #a5d6ff;
+                  --pv-l-fn: #6f42c1; --pv-d-fn: #d2a8ff;
+                  --pv-l-cm: #6a737d; --pv-d-cm: #8b949e;
+                " data-page-node-id="quvm95S9BlZ1ir432YM7nG"
+              ><code data-page-node-id="h5hfUK9ARpvmQYTkzkV75P"><span class="pv-cm" data-page-node-id="AGJ6Nv1a3MLAevfPCHvgPZ">// astro.config.mjs</span>
+<span class="pv-kw" data-page-node-id="P3bPQL0cGEyQRBR9KxQHDh">export default</span> <span class="pv-fn" data-page-node-id="z5xNDn2GQ48V6WjMzAR7Ck">defineConfig</span>({
+  markdown: {
+    shikiConfig: {
+      themes: { light: <span class="pv-str" data-page-node-id="gua2wFuzMW9Sv0WplTETDV">'github-light'</span>, dark: <span class="pv-str" data-page-node-id="MVbNAppKGym4sbZ3k1D71Q">'github-dark'</span> },
+      defaultColor: <span class="pv-kw" data-page-node-id="PTI9F1GAs9r5nHhgtLdLG0">false</span>,
+    },
+  },
+});</code></pre>
+
+              <h2 data-page-node-id="YAXTelze7UsTeaGRvbBbsX">小结</h2>
+              <table data-page-node-id="CKNEVubohEiFmqmYFoeTrV">
+                <thead data-page-node-id="Huf4yciBo0Uitj4X8AR9jG">
+                  <tr data-page-node-id="g3b2IQNF5BPiW29Wk3qgMN"><th data-page-node-id="o20xMFuQ3IVFN3G28AGeqa">步骤</th><th data-page-node-id="YtZzWcZ9KUh5EJUtzfKK2R">关键点</th></tr>
+                </thead>
+                <tbody data-page-node-id="f1pUZ2M6gLbQwRpE8OUHPn">
+                  <tr data-page-node-id="GB6AxvPa7szJV9zXWknTK5"><td data-page-node-id="EmF40Potq4l79F7HB3pX3g">配置 Shiki</td><td data-page-node-id="TDoPOlTryT3JxHPLlYmC11"><code data-page-node-id="YR4T1eq8EkNw3xGdybl4lC">themes</code> 传两个主题，<code data-page-node-id="ymhkavxqO00veIpAzqP2Z1">defaultColor: false</code></td></tr>
+                  <tr data-page-node-id="UqmKDuGnY9c00WvTn9ezmF"><td data-page-node-id="p8mlZ6eyg3SE8Ee6o7unj6">写 CSS</td><td data-page-node-id="JFPOZGvOKh2ZtAB4HP3MAu">前景色和背景色都要按主题切换</td></tr>
+                  <tr data-page-node-id="OtNMw10fhfd3uoB0IuLIRx"><td data-page-node-id="RbHpTCq3IdCffytXGT1eXn">防闪白</td><td data-page-node-id="s4vjfggVBGlBqy81Aij6qK">主题判断脚本必须内联在 <code data-page-node-id="C0Ezkh5gDdoW0kIYLQVhw2">&lt;head&gt;</code></td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <nav class="post-nav" data-page-node-id="K9AtWWHjy1y1VbG0lqyMJO">
+              <a class="post-nav__item" href="#" data-page-node-id="w7LEXCCSfBs46lIk6GlhLG">
+                <span class="post-nav__label" data-page-node-id="iTmEGgdViH024BUg5Wg3pp">← 上一篇</span>
+                <span class="post-nav__title" data-page-node-id="C73Rm19YftAqCNqwQk2LWG">写在前面：这个博客怎么用</span>
+              </a>
+              <span class="post-nav__spacer" data-page-node-id="n8MUEYaG7HjbMgo2raC98P"></span>
+            </nav>
+
+            <section class="comments-placeholder" data-page-node-id="1dOffjT2EHa9W4gQDBO3yh">
+              <strong data-page-node-id="J3GFIAdVJ0GWxLURg3ZQdb">评论区还没配置好</strong>
+              <ol data-page-node-id="iPQ3YbySzIdTQnJMF6whvH">
+                <li data-page-node-id="lnCyj2q3UL96TWRZf4agPJ">仓库推上 GitHub 后，去 giscus.app 拿到 <code data-page-node-id="iFqFAFdtT18dbTZGv2yJjt">data-repo-id</code> 和 <code data-page-node-id="I8tQhkbNWnAb7h0r15GyIg">data-category-id</code>。</li>
+                <li data-page-node-id="CWwbOtF7YxQw4kc9ctNV1d">填进 <code data-page-node-id="Q7xXzMiv5K3xnYrLj835t2">src/site.config.mjs</code>，重新部署即可。</li>
+              </ol>
+            </section>
+          </article>
+
+          <aside class="article-layout__aside" data-page-node-id="JcBouvPI8jLB9FqJP1zUUa">
+            <div class="toc-sticky" data-page-node-id="4nB7m3pNjgdU46aSVtE3kg">
+              <nav class="toc" data-page-node-id="ReTGlll2wJp8u3l0vZupdO">
+                <p class="toc__title" data-page-node-id="ddryaYm3DPJcDjDrMbeb1y">目录</p>
+                <ul data-page-node-id="J03biJaA5ClfAGbhxnEcZb">
+                  <li class="toc__h2" data-page-node-id="ZAA59rdeluw5A2ELFRWOpP"><a href="#" class="is-active" data-page-node-id="EdtCIlxG3fTRuI6JhhdJHO">问题是什么</a></li>
+                  <li class="toc__h2" data-page-node-id="ISSSAQdkLmVr2IFQOBRuEA"><a href="#" data-page-node-id="gtB0rGPGA7putqnaVBPpVL">配置写法</a></li>
+                  <li class="toc__h2" data-page-node-id="CGtRxsKXZfOHrR04dhza6y"><a href="#" data-page-node-id="tKs54AvQDcC9K6euMYz124">小结</a></li>
+                </ul>
+              </nav>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </main>
+
+    <footer class="site-footer" data-page-node-id="vKpvtaCM24fcYOoKrEGHxC">
+      <div class="wrap site-footer__inner" data-page-node-id="yveLyE1NzwraXvExCg9A9w">
+        <div data-page-node-id="FD0rTtFQYOqeNym4sbnwEC">© 2026 YOUR_NAME · 由 <a href="https://astro.build" data-page-node-id="thWKOpOrqEEK5Nk9pVLC5d">Astro</a> 驱动</div>
+      </div>
+    </footer>
+
+    <script>
+      document.getElementById('theme-toggle')?.addEventListener('click', function () {
+        var root = document.documentElement;
+        var next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = next;
+        try {
+          localStorage.setItem('theme', next);
+        } catch (e) {}
+      });
+    </script>
+  </body>
+</html>

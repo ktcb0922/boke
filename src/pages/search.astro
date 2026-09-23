@@ -1,0 +1,91 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="搜索" description="在站内所有文章中检索关键词" width="wide">
+  <header class="page-head">
+    <h1>搜索</h1>
+    <p>输入关键词，实时检索所有文章的正文内容</p>
+  </header>
+
+  <label class="sr-only" for="search-input">搜索关键词</label>
+  <input
+    id="search-input"
+    class="search-box"
+    type="search"
+    placeholder="例如：Astro、TypeScript、性能优化…"
+    autocomplete="off"
+    spellcheck="false"
+  />
+  <p class="search-hint" id="search-hint">输入至少 2 个字符开始搜索</p>
+  <ul class="search-results" id="search-results"></ul>
+</BaseLayout>
+
+<script>
+  const input = document.getElementById('search-input');
+  const hint = document.getElementById('search-hint');
+  const list = document.getElementById('search-results');
+
+  // 站点可能部署在子路径下（例如 /boke/），Pagefind 索引里存的是不含前缀的路径，
+  // 所以这里要手动补上 BASE_URL
+  const BASE = import.meta.env.BASE_URL.replace(/\/$/, '');
+
+  function toHref(url) {
+    if (!BASE) return url;
+    return url.startsWith(`${BASE}/`) ? url : `${BASE}${url}`;
+  }
+
+  let pagefind = null;
+
+  (async () => {
+    try {
+      // @vite-ignore 让打包器跳过这个路径 —— 它只在构建产物里存在
+      const bundlePath = `${import.meta.env.BASE_URL}pagefind/pagefind.js`;
+      pagefind = await import(/* @vite-ignore */ bundlePath);
+      await pagefind.options({ excerptLength: 24 });
+    } catch (error) {
+      pagefind = null;
+      hint.textContent =
+        '搜索索引尚未生成。本地请先运行 npm run build，再用 npm run preview 打开预览站点搜索。';
+    }
+  })();
+
+  let timer;
+  input?.addEventListener('input', () => {
+    clearTimeout(timer);
+    const query = input.value.trim();
+
+    if (!pagefind) return;
+    if (query.length < 2) {
+      list.innerHTML = '';
+      hint.textContent = query.length === 0 ? '输入至少 2 个字符开始搜索' : '再多输入一个字符…';
+      return;
+    }
+
+    timer = setTimeout(runSearch, 160);
+  });
+
+  async function runSearch() {
+    const query = input.value.trim();
+    const search = await pagefind.search(query);
+    const data = await Promise.all(search.results.slice(0, 20).map((item) => item.data()));
+
+    if (data.length === 0) {
+      list.innerHTML = '';
+      hint.textContent = `没有找到与「${query}」相关的内容`;
+      return;
+    }
+
+    hint.textContent = `找到 ${search.results.length} 条结果`;
+
+    list.innerHTML = data
+      .map(
+        (item) => `
+      <li>
+        <h2 class="search-result__title"><a href="${toHref(item.url)}">${item.meta?.title ?? item.url}</a></h2>
+        <p class="search-result__excerpt">${item.excerpt}</p>
+      </li>`
+      )
+      .join('');
+  }
+</script>

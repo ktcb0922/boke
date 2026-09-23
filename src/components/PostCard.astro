@@ -1,0 +1,31 @@
+---
+import { formatDate, readingTime, type Post } from '../lib/posts';
+import { withBase } from '../site.config.mjs';
+
+interface Props {
+  post: Post;
+}
+
+const { post } = Astro.props;
+const minutes = readingTime(post.body);
+---
+<li class="post-card">
+  <h3 class="post-card__title">
+    <a href={withBase(`/posts/${post.id}/`)}>{post.data.title}</a>
+  </h3>
+  <div class="post-card__meta">
+    {post.data.pinned && <span class="pin-badge">置顶</span>}
+    <time datetime={post.data.pubDate.toISOString()}>{formatDate(post.data.pubDate)}</time>
+    <span>·</span>
+    <span>约 {minutes} 分钟</span>
+    {
+      post.data.tags.length > 0 && (
+        <Fragment>
+          <span>·</span>
+          <span>{post.data.tags.slice(0, 3).map((tag) => `#${tag}`).join(' ')}</span>
+        </Fragment>
+      )
+    }
+  </div>
+  {post.data.description && <p class="post-card__desc">{post.data.description}</p>}
+</li>

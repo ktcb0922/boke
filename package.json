@@ -1,0 +1,23 @@
+{
+  "name": "tech-notes-blog",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "prebuild": "node scripts/check.cjs",
+    "build": "astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "astro": "astro",
+    "new": "node scripts/new-post.mjs",
+    "check": "node scripts/check.cjs"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "astro": "^7.3.4"
+  },
+  "devDependencies": {
+    "pagefind": "^1.5.2"
+  }
+}

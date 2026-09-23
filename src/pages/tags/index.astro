@@ -1,0 +1,28 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getTagCounts } from '../../lib/posts';
+import { withBase } from '../../site.config.mjs';
+
+const tags = await getTagCounts();
+---
+<BaseLayout title="标签" description="按标签浏览所有文章" width="wide">
+  <header class="page-head">
+    <h1>标签</h1>
+    <p>共 {tags.length} 个标签</p>
+  </header>
+
+  {
+    tags.length > 0 ? (
+      <div class="tag-cloud">
+        {tags.map(({ tag, count }) => (
+          <a class="tag" href={withBase(`/tags/${encodeURIComponent(tag)}/`)}>
+            {tag}
+            <span class="tag__count">{count}</span>
+          </a>
+        ))}
+      </div>
+    ) : (
+      <p class="empty-state">还没有标签。给文章 frontmatter 加 <code>tags: [标签名]</code> 就会自动出现在这里。</p>
+    )
+  }
+</BaseLayout>

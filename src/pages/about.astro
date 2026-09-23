@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE, withBase } from '../site.config.mjs';
+---
+
+<BaseLayout title="关于" description={`关于 ${SITE.title}`}>
+  <header class="page-head">
+    <h1>关于</h1>
+    <p>这个页面是静态的，直接改 <code>src/pages/about.astro</code> 就行。</p>
+  </header>
+
+  <div class="prose">
+    <p>
+      你好，我是 <strong>{SITE.author}</strong>。这里是我的技术笔记本 ——
+      用来把学过的东西写清楚，因为「能讲明白」才算真的懂了。
+    </p>
+
+    <h2>这里写什么</h2>
+    <ul>
+      <li>踩过的坑，以及最后是怎么爬出来的</li>
+      <li>读源码、读文档后的整理笔记</li>
+      <li>对某个技术方案的取舍思考</li>
+    </ul>
+
+    <h2>关于这个站点</h2>
+    <p>
+      用 <a href="https://astro.build" rel="noopener" target="_blank">Astro</a> 构建，
+      托管在 GitHub Pages，全站静态、没有后端。
+      评论走 giscus（基于 GitHub Discussions），搜索由 Pagefind 在构建时生成索引。
+    </p>
+
+    <h2>联系我</h2>
+    <p>
+      有想聊的，欢迎在任意文章下面留言。也可以在
+      <a href={withBase('/search/')}>站内搜索</a>里找找你想看的内容。
+    </p>
+  </div>
+</BaseLayout>

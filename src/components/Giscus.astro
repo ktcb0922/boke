@@ -1,0 +1,78 @@
+---
+import { SITE } from '../site.config.mjs';
+
+const configured =
+  SITE.giscus.enabled &&
+  Boolean(SITE.giscus.repoId) &&
+  Boolean(SITE.giscus.categoryId);
+---
+
+{
+  configured ? (
+    <section class="comments" aria-label="评论区">
+      <h2>评论</h2>
+      <div class="giscus"></div>
+      <script
+        define:vars={{
+          repo: SITE.giscus.repo,
+          repoId: SITE.giscus.repoId,
+          category: SITE.giscus.category,
+          categoryId: SITE.giscus.categoryId,
+        }}
+      >
+        // define:vars 生成的是内联普通脚本，普通脚本里顶层不能写 return，
+        // 所以这里必须用 IIFE 包一层
+        (function () {
+          const mount = document.querySelector('.giscus');
+          if (!mount) return;
+
+          const script = document.createElement('script');
+          script.src = 'https://giscus.app/client.js';
+          script.async = true;
+          script.crossOrigin = 'anonymous';
+          const attrs = {
+            'data-repo': repo,
+            'data-repo-id': repoId,
+            'data-category': category,
+            'data-category-id': categoryId,
+            'data-mapping': 'pathname',
+            'data-strict': '0',
+            'data-reactions-enabled': '1',
+            'data-emit-metadata': '0',
+            'data-input-position': 'top',
+            'data-theme': document.documentElement.dataset.theme === 'dark' ? 'dark' : 'light',
+            'data-lang': 'zh-CN',
+            'data-loading': 'lazy',
+          };
+          Object.entries(attrs).forEach(([key, value]) => script.setAttribute(key, value));
+          mount.appendChild(script);
+
+          // 跟随站点主题切换同步评论框配色
+          window.addEventListener('theme-change', (event) => {
+            const frame = document.querySelector('iframe.giscus-frame');
+            if (!frame) return;
+            frame.contentWindow?.postMessage(
+              { giscus: { setConfig: { theme: event.detail === 'dark' ? 'dark' : 'light' } } },
+              'https://giscus.app'
+            );
+          });
+        })();
+      </script>
+    </section>
+  ) : (
+    <section class="comments-placeholder">
+      <strong>评论区还没配置好</strong>
+      <ol>
+        <li>
+          仓库推上 GitHub 后，去 <a href="https://giscus.app" rel="noopener" target="_blank">giscus.app</a>
+          填写仓库名，它会给你 <code>data-repo-id</code> 和 <code>data-category-id</code>。
+        </li>
+        <li>
+          把这两个值填进 <code>src/site.config.mjs</code> 的 <code>giscus.repoId</code> 和
+          <code>giscus.categoryId</code>。
+        </li>
+        <li>重新部署即可，这条提示会自动消失。</li>
+      </ol>
+    </section>
+  )
+}
