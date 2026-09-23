@@ -21,6 +21,10 @@ pnpm-debug.log*
 # 本地工具数据（不属于博客内容，不要推到公开仓库）
 .workbuddy-ai/
 
+# 自留的使用说明：文件保留在本地，但永远不提交、不发布到线上
+# 注意：本地 npm run dev 仍会把它当作一篇文章显示，这是预期行为
+src/content/posts/hello-world.md
+
 # editors
 .vscode/*
 !.vscode/extensions.json
